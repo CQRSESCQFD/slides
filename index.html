@@ -8,6 +8,7 @@
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
+		<link ref="stylesheet" href="css/custom.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +25,101 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section data-markdown>## CQRS + ES > CRUD, CQFD</section>
+				<section>
+					Valentin KASAS<br/>
+					<img src="https://media.licdn.com/media/p/3/005/04d/07b/14cc7c4.jpg" />
+				</section>
+				<section>
+					Damien GOUYETTE<br/>
+					<img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/1/000/0e9/088/3af1beb.jpg"/>
+				</section>
+				<section>
+					Hamak.fr
+					<img src="/images/hamak.png"/>
+				</section>
+
+				<section>
+					<section>CRUD traditionnel</section>
+					<section>
+Perte d'informations à chaque mise à jour						<pre><code data-trim data-noescape>
+//avant
+{
+    "firstName" : "John", "lastName" : "DOE",
+    <mark>"email" : "john.doe@yahoo.com"</mark> // valeur perdue pour toujours
+}
+
+//après
+{
+    "firstName" : "John", "lastName" : "DOE",
+    "email" : "john.doe@gmail.com"
+}
+
+</code></pre>
+
+
+		</section>
+
+				</section>
+				<section>
+					<section>Rappels</section>
+					<section>
+					<mark>C</mark>ommand <mark>Q</mark>uery <mark>R</mark>esponsability <mark>S</mark>egregation</section>
+					<section><mark>E</mark>vent <mark>S</mark>ourcing</section>
+				</section>
+				<section>Architecture Technique de Hamak</section>
+				<section>
+					De la requête HTTP à la commande
+
+					<aside class="notes">
+						Exemple de commande curl sur l'API
+					</aside>
+
+				</section>
+				<section>
+					<section>
+						De la commande aux événements
+					</section>
+					<section>
+						Validation technique
+						<aside class="notes">
+							Json.format + exemple de validation avancées
+						</aside>
+					</section>
+					<section>
+						Validation métier
+						<aside class="notes">
+							Validation d'une commande, réutilisation des contraintes,
+						</aside>
+					</section>
+					<section>
+						Quid des sagas ?
+						<aside class="notes">
+							Pourquoi on ne les a pas utilisé.
+							Citer des cas d'usages qui auraient pu s'y prêter
+						</aside>
+					</section>
+
+
+				</section>
+				<section>Application de l’event Event Handler</section>
+				<section>
+					Utilisation des events ?
+					<aside class="notes">
+						Statistiques
+						Résolutation des incidents
+					</aside>
+				</section>
+				<section>Akka à la rescousse</section>
+				<section>La prod 2 ans plus tard</section>
+				<section>Conclusion</section>
+				<section>
+					¿ Questions ?<br/>
+					<img src="https://media.giphy.com/media/5XRB3Ay93FZw4/giphy.gif"/>
+				</section>
+
+
+
 			</div>
 		</div>
 
@@ -36,6 +130,8 @@
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
+				slideNumber: true,
+
 
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
