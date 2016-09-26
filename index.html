@@ -38,28 +38,21 @@
             Hamak.fr
             <img src="/images/hamak.png"/>
         </section>
-        <section>
-            <section>CRUD traditionnel</section>
-            <section>
-                Perte d'informations à chaque mise à jour
-                <pre><code data-trim data-noescape>
-//avant
-{
-    "firstName" : "John", "lastName" : "DOE",
-    <mark>"email" : "john.doe@yahoo.com"</mark> // valeur perdue pour toujours
-}
-
-//après
-{
-    "firstName" : "John", "lastName" : "DOE",
-    "email" : "john.doe@gmail.com"
-}
-
-</code></pre>
-            </section>
         </section>
         <section>
             <section>Rappels</section>
+            <section>
+                CRUD traditionnel<br/>
+                Perte d'informations à chaque mise à jour
+                <p>&nbsp;</p>
+                <ul>
+                    <li><mark>Create</mark></li>
+                    <li>Read</li>
+                    <li><mark>Update</mark></li>
+                    <li><mark>Delete</mark></li>
+
+                </ul>
+            </section>
             <section>
                 <mark>C</mark>
                 ommand
@@ -97,7 +90,7 @@ sealed trait UserCmd extends Cmd
 sealed trait JobCmd extends Cmd
 
 case object DeleteProviderReview extends JobCommand
-case class CreateUser(user : User) extends UserCommand
+case class CreateUser(user : User) extends <UserCommand></UserCommand>
                     </code>
                     </pre>
             </section>
@@ -108,13 +101,18 @@ case class CreateUser(user : User) extends UserCommand
                     Citer des cas d'usages qui auraient pu s'y prêter
                 </aside>
             </section>
+            <section>
+                Utilité de serialiser les commandes
+                <aside class="notes">
+                    Parler du scheduling ? Pour réinjecter à un moment donné une commande VS renvoyer un message
+                </aside>
+            </section>
         </section>
         <section>
             <section>
                 <section>
                     De la commande aux événements
                 </section>
-
             </section>
             <section>
                 Définition d'un Processor

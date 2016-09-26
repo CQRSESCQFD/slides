@@ -1,0 +1,12 @@
+@startuml
+
+participant "Client Http"
+participant UserController
+participant CommandHandler
+
+"Client Http"-> UserController : {\n  "firstName" : "John", \n  "lastName" : "DOE" \n}
+
+UserController->UserController : Missing field "birthDate"
+UserController -> "Client Http" : Reponse 400  \n {"error" : "obj.birthDate.required"}
+
+@enduml

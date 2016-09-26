@@ -1,0 +1,19 @@
+@startuml
+
+participant "Client Http"
+participant UserController
+participant CommandHandler
+participant EventHandler
+
+"Client Http"-> UserController : {\n  "firstName" : "John", \n  "lastName" : "DOE"\n, "birthDate" : "01/01/1976"}
+
+UserController->UserController : json valide
+UserController-> CommandHandler : CreateUser
+CommandHandler -> CommandHandler : Règles métier valides
+CommandHandler -> EventHandler : UserCreated
+EventHandler -> EventHandler : ???
+EventHandler -> CommandHandler : ???
+CommandHandler -> UserController : ???
+UserController -> "Client Http" : Reponse 201 + Location
+
+@enduml

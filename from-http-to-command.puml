@@ -1,6 +1,0 @@
-@startuml
-class Job {
-  SkillId skillId
-  Quote[] quotes
-}
-//TODO
