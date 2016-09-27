@@ -1,0 +1,11 @@
+@startuml
+
+participant "Client Http"
+participant JobController
+
+"Client Http"-> JobController : {\n "askerId" : "user-543bec57400000400011f40f",  \n  "title" : "Tondre la pelouse", \n  "skill" : "Jardinnage" \n}
+
+JobController->JobController : Missing field "expirationDate"
+JobController -> "Client Http" : Reponse 400  \n {"error" : "obj.expirationDate.required"}
+
+@enduml

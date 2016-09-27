@@ -37,48 +37,96 @@
         <section>
             Hamak.fr
             <img src="/images/hamak.png"/>
-        </section>
-        </section>
-        <section>
-            <section>Rappels</section>
-            <section>
-                CRUD traditionnel<br/>
-                Perte d'informations à chaque mise à jour
-                <p>&nbsp;</p>
-                <ul>
-                    <li><mark>Create</mark></li>
-                    <li>Read</li>
-                    <li><mark>Update</mark></li>
-                    <li><mark>Delete</mark></li>
+            <aside class="notes">
+                Issu d'un Hackathon chez PagesJaunes<br/>
+                Equipe à côté de pagesJaunes (sans ses contraintes)<br/>
+                2 ans d'existence.
+            </aside>
 
-                </ul>
-            </section>
-            <section>
-                <mark>E</mark>
-                vent
-                <mark>S</mark>
-                ourcing
-            </section>
-            <section>
-                <mark>C</mark>
-                ommand
-                <mark>Q</mark>
-                uery
-                <mark>R</mark>
-                esponsability
-                <mark>S</mark>
-                egregation
-            </section>
         </section>
         <section>Architecture Technique de Hamak<br/><br/>
             //TODO image architecture réseau
         </section>
         <section>
+            CRUD traditionnel<br/>
+            Perte d'informations à chaque mise à jour
+            <aside class="notes">
+                <ul>
+                    <li>
+                        <mark>Create</mark>
+                    </li>
+                    <li>Read</li>
+                    <li>
+                        <mark>Update</mark>
+                    </li>
+                    <li>
+                        <mark>Delete</mark>
+                    </li>
+                </ul>
+            </aside>
+        </section>
+        <section>
+            <mark>E</mark>
+            vent
+            <mark>S</mark>
+            ourcing<br/><br/>
+            <aside class="notes">
+                <ul>
+                    <li>Log d'event</li>
+                    <li>Etat</li>
+                    <li>L'intérêt de réagir à des events</li>
+                </ul>
+            </aside>
+        </section>
+        <section>
+            <mark>C</mark>
+            ommand
+            <mark>Q</mark>
+            uery
+            <mark>R</mark>
+            esponsability
+            <mark>S</mark>
+            egregation
+        </section>
+
+
+        <section>
             <section>
                 De la requête HTTP à la commande
+            </section>
+            <section>
+                Validation de la requête<br/>
+
+                <img src="/schemas/1-from-http-to-command-missing-field.png"/>
+                <br/> 1er niveau (technique) : Controller
+            </section>
+            <section>
+                Validation simple par les types
+                <pre>
+                    <code data-trim data-noescape>
+case class User(_id: UserId,
+    firstName: Option[String] = None,
+    lastName: Option[Strinng] = None)
+
+implicit val userIdFormat = Json.format[UserId]
+implicit val jobFormat = Json.format[User]
+                    </code>
+                </pre>
+            </section>
+            <section>
+                Validation plus avancée
+                <pre>
+                    <code data-trim data-noescape>
+def reviewJsonReader: Reads[Review] = (
+  (__ \ 'text).read[String](minLength[String](75)) and
+    (__ \ 'title).readNullable[String] and
+    (__ \ 'punctuality).read[Int](min(1) keepAnd max(5)))
+    //to continue
+                    </code>
+                </pre>
                 <aside class="notes">
-                    Qu'est ce qu'une commande ? <br/>
-                    Exemple de commande curl sur l'API
+                Découpage de ses classes de validation en package (controller, shared, persistance)<br/>
+                Pb avec jodaTime date UTC
                 </aside>
             </section>
             <section>
@@ -89,75 +137,56 @@ sealed trait Cmd
 sealed trait UserCmd extends Cmd
 sealed trait JobCmd extends Cmd
 
-case object DeleteProviderReview extends JobCommand
-case class CreateUser(user : User) extends <UserCommand></UserCommand>
+case object DeleteProviderReview extends JobCmd
+case class CreateUser(user : User) extends UserCmd
                     </code>
                     </pre>
-            </section>
-            <section>
-                Quid des sagas ?
                 <aside class="notes">
-                    Pourquoi on ne les a pas utilisé.
+                    Qu'est ce qu'une commande ? <br/>
+                    <mark>Saga</mark>
+                    : Pourquoi on ne les a pas utilisé.<br/>
                     Citer des cas d'usages qui auraient pu s'y prêter
                 </aside>
             </section>
             <section>
-                Utilité de serialiser les commandes
-                <aside class="notes">
-                    Parler du scheduling ? Pour réinjecter à un moment donné une commande VS renvoyer un message
-                </aside>
-            </section>
-        </section>
-        <section>
-            <section>
-                <section>
-                    De la commande aux événements
-                </section>
-            </section>
-            <section>
                 Définition d'un Processor
-            </section>
-            <section>
-                Validation 1er niveau (technique)
-                <aside class="notes">
-                    Json.format + exemple de validation avancées
-                </aside>
-            </section>
-            <section>
                 <pre>
                     <code data-trim data-noescape>
-implicit val userFormat = Json.format[User]
-implicit val jobFormat = Json.format[Job]
-                    </code>
+trait CommandProcessor[C <: Cmd, E] extends Serializable {
+    def validator: Validator[E]
+    def events(context: CommandContext): E=> List[BusinessEvent]
+}
+
+case class CommandContext(issuer: Identity,
+                        when: DateTime,
+                        command: Cmd,
+                        commandId: CommandId)
+                      </code>
                 </pre>
             </section>
             <section>
-                <pre>
-                    <code data-trim data-noescape>
-def reviewJsonReader: Reads[Review] = (
-  (__ \ 'text).read[String](minLength[String](75)) and
-    (__ \ 'title).readNullable[String] and
-    (__ \ 'punctuality).read[Int](min(1) keepAnd max(5)))
-    //to continue
-                    </code>
-                </pre>
-            </section>
-            <section>
-                Validation métier
+                Validation niveau 2 éme métier (régles métiers) cas KO
+                <img src="/schemas/2-from-http-to-command-missing-field.png"/>
+
                 <aside class="notes">
                     Validation d'une commande, réutilisation des contraintes,
                 </aside>
             </section>
 
+            <section>
+                Validation niveau 2 métier (régles métiers) cas passant
+                <img src="/schemas/3-from-http-to-command.png"/>
 
-        </section>
-        <section>Application de l’event Event Handler</section>
-        <section>
-            Utilisation des events ?
-            <aside class="notes">
-                Statistiques
-                Résolutation des incidents
-            </aside>
+                <aside class="notes">
+                    Validation d'une commande, réutilisation des contraintes,
+                </aside>
+            </section>
+            <section>
+                Utilité de serialiser les commandes
+                <aside class="notes">
+                    Parler du scheduling ? Pour réinjecter à un moment donné une commande VS schedule non persisté
+                </aside>
+            </section>
         </section>
         <section>
             Akka à la rescousse
@@ -167,6 +196,15 @@ def reviewJsonReader: Reads[Review] = (
                 Akka-cluster
             </aside>
         </section>
+        <section>Application de l’event Event Handler</section>
+        <section>
+            Utilisation des events ?
+            <aside class="notes">
+                Statistiques
+                Résolutation des incidents
+            </aside>
+        </section>
+
         <section>
             La prod 2 ans plus tard
             <aside class="notes">
@@ -192,6 +230,7 @@ def reviewJsonReader: Reads[Review] = (
     Reveal.initialize({
         history: true,
         slideNumber: true,
+        showNotes: true,//display notes
 
 
         // More info https://github.com/hakimel/reveal.js#dependencies
