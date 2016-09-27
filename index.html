@@ -28,11 +28,11 @@
         <section data-markdown>## CQRS + ES > CRUD, CQFD</section>
         <section>
             Valentin KASAS<br/>
-            <img src="https://media.licdn.com/media/p/3/005/04d/07b/14cc7c4.jpg"/>
+            <img src="images/valentin.jpg"/>
         </section>
         <section>
             Damien GOUYETTE<br/>
-            <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/1/000/0e9/088/3af1beb.jpg"/>
+            <img src="images/damien.jpg"/>
         </section>
         <section>
             Hamak.fr
@@ -97,8 +97,11 @@
             <section>
                 Validation de la requête<br/>
 
-                <img src="/schemas/1-from-http-to-command-missing-field.png"/>
+                <img class="stretch" src="/schemas/1-from-http-to-command-missing-field.png"/>
                 <br/> 1er niveau (technique) : Controller
+                <aside class="notes">
+                    Chaque requête http (en écriture) est une commande
+                </aside>
             </section>
             <section>
                 Validation simple par les types
@@ -125,8 +128,8 @@ def reviewJsonReader: Reads[Review] = (
                     </code>
                 </pre>
                 <aside class="notes">
-                Découpage de ses classes de validation en package (controller, shared, persistance)<br/>
-                Pb avec jodaTime date UTC
+                    Découpage de ses classes de validation en package (controller, shared, persistance)<br/>
+                    Pb avec jodaTime date UTC
                 </aside>
             </section>
             <section>
@@ -153,8 +156,8 @@ case class CreateUser(user : User) extends UserCmd
                 <pre>
                     <code data-trim data-noescape>
 trait CommandProcessor[C <: Cmd, E] extends Serializable {
-    def validator: Validator[E]
-    def events(context: CommandContext): E=> List[BusinessEvent]
+                            def validator: Validator[E]
+                            def events(context: CommandContext): E=> List[BusinessEvent]
 }
 
 case class CommandContext(issuer: Identity,
@@ -165,8 +168,22 @@ case class CommandContext(issuer: Identity,
                 </pre>
             </section>
             <section>
+                Conversion des erreurs de validation en code http
+                <pre>
+                    <code data-trim data-noescape="">
+def toError(key : String): (List[CommandError] => Result) =  {
+    case StateShouldNotBeNull :: Nil => NotFound
+    case JobV.WrongJobStatus :: Nil => Conflict
+}
+                    </code>
+                    <aside class="notes">
+                        Pas de gestion des erreurs multiples, mais le besoin ne s'est pas fait ressentir vis à vis des clients
+                    </aside>
+                </pre>
+            </section>
+            <section>
                 Validation niveau 2 éme métier (régles métiers) cas KO
-                <img src="/schemas/2-from-http-to-command-missing-field.png"/>
+                <img class="stretch" src="/schemas/2-from-http-to-command-missing-field.png"/>
 
                 <aside class="notes">
                     Validation d'une commande, réutilisation des contraintes,
@@ -175,11 +192,31 @@ case class CommandContext(issuer: Identity,
 
             <section>
                 Validation niveau 2 métier (régles métiers) cas passant
-                <img src="/schemas/3-from-http-to-command.png"/>
+                <img class="stretch" src="/schemas/3-from-http-to-command.png"/>
 
                 <aside class="notes">
                     Validation d'une commande, réutilisation des contraintes,
                 </aside>
+            </section>
+            <section>
+                <pre>
+                    <code data-trim data-noescape>
+def StateIsNotNull[E <: AnyRef]: Validator[E]=Reader {state=>
+  if (state == null) StateShouldNotBeNull.failureNel[List[AnyEvent]]
+  else Nil.successNel[CommandError]
+}
+def StatusIsOneOf(head: JobStatus,tail:JobStatus*): Validator[Job]={
+  val statuses = head :: tail.toList
+  Validator[Job] {
+    job =>
+      if(statuses.contains(job.status)) Nil.successNel[CommandError]
+      else WrongJobStatus.failureNel[List[AnyEvent]]
+  }
+}
+ //possibilité de les combiner
+StateIsNotNull[Job] |+| StatusIsOneOf(InReview, Pending)
+                    </code>
+                </pre>
             </section>
             <section>
                 Utilité de serialiser les commandes
@@ -189,6 +226,10 @@ case class CommandContext(issuer: Identity,
             </section>
         </section>
         <section>
+            <section>De la commande aux événements</section>
+            <section>Application de l’event Event Handler</section>
+        </section>
+        <section>
             Akka à la rescousse
             <aside class="notes">
                 Akka
@@ -196,7 +237,6 @@ case class CommandContext(issuer: Identity,
                 Akka-cluster
             </aside>
         </section>
-        <section>Application de l’event Event Handler</section>
         <section>
             Utilisation des events ?
             <aside class="notes">

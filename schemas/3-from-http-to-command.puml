@@ -5,7 +5,7 @@ participant UserController
 participant CommandHandler
 participant EventHandler
 
-"Client Http"-> UserController : {\n  "firstName" : "John", \n  "lastName" : "DOE"\n, "birthDate" : "01/01/1976"}
+"Client Http"-> UserController : POST /api/v1/jobs {\n  "firstName" : "John", \n  "lastName" : "DOE"\n, "birthDate" : "01/01/1976"}
 
 UserController->UserController : json valide
 UserController-> CommandHandler : CreateUser

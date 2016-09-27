@@ -4,7 +4,7 @@ participant "Client Http"
 participant JobController
 participant CommandProcessor
 
-"Client Http"-> JobController : {\n "askerId" : "user-543bec57400000400011f40f",  \n  "title" : "Tondre la pelouse", \n  "skill" : "Jardinnage",\n "expiredDate"  : "01/02/2015"}
+"Client Http"-> JobController : POST /api/v1/jobs {\n "askerId" : "user-543bec57400000400011f40f",  \n  "title" : "Tondre la pelouse", \n  "skill" : "Jardinnage",\n "expiredDate"  : "01/02/2015"}
 
 JobController->JobController : json valide
 JobController->CommandProcessor : CreateJob(...)
