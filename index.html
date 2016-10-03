@@ -34,39 +34,28 @@
             <section data-markdown="external-md/simple-model-provider.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/simple-model-job.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
         </section>
-            <section>Architecture Technique de Hamak<br/><br/>//TODO image architecture réseau</section>
+        <section>Architecture Technique de Hamak<br/><br/>//TODO image architecture réseau</section>
 
         </section>
         <section>
             CRUD traditionnel<br/>
-            Perte d'informations à chaque mise à jour
             <aside class="notes">
-                <ul>
-                    <li>
-                        <mark>Create</mark>
-                    </li>
-                    <li>Read</li>
-                    <li>
-                        <mark>Update</mark>
-                    </li>
-                    <li>
-                        <mark>Delete</mark>
-                    </li>
-                </ul>
+                persistence de la mutation d'un état<br/>
+                + maturité (concepts, outillage, développeur) que ce soit BDD traditionnelle ou NoSQL<br/>
+                - Perte d'informations à chaque requête en écriture<br/>
+                Il existe cependant des outils d'historisation (hibernate anvers...)
+
             </aside>
         </section>
         <section>
-            <mark>E</mark>
-            vent
-            <mark>S</mark>
-            ourcing<br/><br/>
-            <aside class="notes">
-                <ul>
-                    <li>Log d'event</li>
-                    <li>Etat</li>
-                    <li>L'intérêt de réagir à des events</li>
-                </ul>
-            </aside>
+            <section>
+                <mark>E</mark>
+                vent
+                <mark>S</mark>
+                ourcing<br/><br/>
+            </section>
+            <section data-markdown="external-md/apply-event.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+
         </section>
         <section>
             <mark>C</mark>
@@ -77,6 +66,16 @@
             esponsability
             <mark>S</mark>
             egregation
+
+            <aside class="notes">
+                <ul>
+                    <li>Document oriented</li>
+                    <li>Côté query requête geospatiales, framework d'aggregation, requêtes portant sur plusieurs aggregats</li>
+                    <li>//TODO Définir aggregats vs states</li>
+                    <li>//TODO Côté commande</li>
+                    <li>Historique Hamak</li>
+                </ul>
+            </aside>
         </section>
 
 
@@ -90,22 +89,12 @@
                 <img class="stretch" src="/schemas/1-from-http-to-command-missing-field.png"/>
                 <br/> 1er niveau (technique) : Controller
                 <aside class="notes">
-                    Chaque requête http (en écriture) est une commande
+                    Chaque requête http (en écriture) à l'API correspond à une commande<br/>
+                    API REST & CQRS
                 </aside>
             </section>
-            <section>
-                Validation simple par les types
-                <pre>
-                    <code data-trim data-noescape>
-case class User(_id: UserId,
-    firstName: Option[String] = None,
-    lastName: Option[Strinng] = None)
+            <section data-markdown="external-md/validation-simple-type.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 
-implicit val userIdFormat = Json.format[UserId]
-implicit val jobFormat = Json.format[User]
-                    </code>
-                </pre>
-            </section>
             <section>
                 Validation plus avancée
                 <pre>
@@ -142,7 +131,7 @@ case class CreateUser(user : User) extends UserCmd
                 </aside>
             </section>
             <section>
-                Définition d'un Processor
+                Contexte et traitement d'une commande
                 <pre>
                     <code data-trim data-noescape>
 trait CommandProcessor[C <: Cmd, E] extends Serializable {
@@ -220,11 +209,17 @@ StateIsNotNull[Job] |+| StatusIsOneOf(InReview, Pending)
             <section>Application de l’event Event Handler</section>
         </section>
         <section>
-            Akka à la rescousse
-            <aside class="notes">
-                Akka
+
+            <section>
+                Akka à la rescousse
+            </section>
+            <section>
                 Akka-persistence
+            </section>
+            <section data-markdown="external-md/akka-persistence-user.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+            <section>
                 Akka-cluster
+            </section>
             </aside>
         </section>
         <section>

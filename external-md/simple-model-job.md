@@ -9,6 +9,7 @@
         "longitude" : 47.349308,
         "latitude" : 0.726781
      },
+     "status" : "inreview",
      "expirationDate" : "2016-11-30T23:59:59.999Z"
  }
 ```
