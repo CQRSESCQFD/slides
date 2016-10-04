@@ -1,10 +1,10 @@
-## Acteur persistent user
+## Akka persistence
 
 ```
 sealed trait UserEvent
 case class LastNameUpdatedEvent(lastName: String) extends UserEvent
 
-class UserPersistenceActor extends PersistentActor with ActorLogging{
+class UserPersistenceActor extends PersistentActor {
   
   var state = User("user-57d80fb91db5e79549713ab5", "John", "DOE")
   
