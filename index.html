@@ -43,7 +43,7 @@
                 persistence de la mutation d'un état<br/>
                 + maturité (concepts, outillage, développeur) que ce soit BDD traditionnelle ou NoSQL<br/>
                 - Perte d'informations à chaque requête en écriture<br/>
-                Il existe cependant des outils d'historisation (hibernate anvers...)
+                Il existe cependant des outils d'historisation (hibernate anvers, triggers sur tables...)
 
             </aside>
         </section>
@@ -53,6 +53,9 @@
                 vent
                 <mark>S</mark>
                 ourcing<br/><br/>
+                <aside class="notes">
+                    //TODO Etoffer cette partie en ajoutant une intro
+                </aside>
             </section>
             <section data-markdown="external-md/apply-event.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 
@@ -90,27 +93,12 @@
                 <br/> 1er niveau (technique) : Controller
                 <aside class="notes">
                     Chaque requête http (en écriture) à l'API correspond à une commande<br/>
+                    Et à une query en lecture<br/>
                     API REST & CQRS
                 </aside>
             </section>
             <section data-markdown="external-md/validation-simple-type.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
-
-            <section>
-                Validation plus avancée
-                <pre>
-                    <code data-trim data-noescape>
-def reviewJsonReader: Reads[Review] = (
-  (__ \ 'text).read[String](minLength[String](75)) and
-    (__ \ 'title).readNullable[String] and
-    (__ \ 'punctuality).read[Int](min(1) keepAnd max(5)))
-    //to continue
-                    </code>
-                </pre>
-                <aside class="notes">
-                    Découpage de ses classes de validation en package (controller, shared, persistance)<br/>
-                    Pb avec jodaTime date UTC
-                </aside>
-            </section>
+            <section data-markdown="external-md/validation-avancee.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section>
                 Anatomie d'une commande
                 <pre>
@@ -119,59 +107,21 @@ sealed trait Cmd
 sealed trait UserCmd extends Cmd
 sealed trait JobCmd extends Cmd
 
-case object DeleteProviderReview extends JobCmd
-case class CreateUser(user : User) extends UserCmd
+case object CreateJob extends JobCmd
+case object AddOrUpdateQuote extends JobCmd
+case class AddSkill extends UserCmd
                     </code>
                     </pre>
                 <aside class="notes">
                     Qu'est ce qu'une commande ? <br/>
-                    <mark>Saga</mark>
-                    : Pourquoi on ne les a pas utilisé.<br/>
-                    Citer des cas d'usages qui auraient pu s'y prêter
+                    Qu'est ce qu'une SAGA<br/>
+                    <mark>Saga</mark>: cas d'usage : creation d'un devis = ajout skill sur provider  (si besoin) + création devis <br/>
                 </aside>
             </section>
-            <section>
-                Contexte et traitement d'une commande
-                <pre>
-                    <code data-trim data-noescape>
-trait CommandProcessor[C <: Cmd, E] extends Serializable {
-                            def validator: Validator[E]
-                            def events(context: CommandContext): E=> List[BusinessEvent]
-}
 
-case class CommandContext(issuer: Identity,
-                        when: DateTime,
-                        command: Cmd,
-                        commandId: CommandId)
-                      </code>
-                </pre>
-            </section>
-            <section>
-                Conversion des erreurs de validation en code http
-                <pre>
-                    <code data-trim data-noescape="">
-def toError(key : String): (List[CommandError] => Result) =  {
-    case StateShouldNotBeNull :: Nil => NotFound
-    case JobV.WrongJobStatus :: Nil => Conflict
-}
-                    </code>
-                    <aside class="notes">
-                        Pas de gestion des erreurs multiples, mais le besoin ne s'est pas fait ressentir vis à vis des clients
-                    </aside>
-                </pre>
-            </section>
             <section>
                 Validation niveau 2 éme métier (régles métiers) cas KO
                 <img class="stretch" src="/schemas/2-from-http-to-command-missing-field.png"/>
-
-                <aside class="notes">
-                    Validation d'une commande, réutilisation des contraintes,
-                </aside>
-            </section>
-
-            <section>
-                Validation niveau 2 métier (régles métiers) cas passant
-                <img class="stretch" src="/schemas/3-from-http-to-command.png"/>
 
                 <aside class="notes">
                     Validation d'une commande, réutilisation des contraintes,
@@ -197,6 +147,63 @@ StateIsNotNull[Job] |+| StatusIsOneOf(InReview, Pending)
                     </code>
                 </pre>
             </section>
+            <section>
+                Conversion des erreurs de validation en code http
+                <pre>
+                    <code data-trim data-noescape="">
+def toError(key : String): (List[CommandError] => Result) =  {
+    case StateShouldNotBeNull :: Nil => NotFound(key)
+    case JobV.WrongJobStatus :: Nil => Conflict(key)
+}
+                    </code>
+                    <aside class="notes">
+                        Pas de gestion des erreurs multiples, mais le besoin ne s'est pas fait ressentir vis à vis des clients<br/>
+                        besoin de standardiser les clés pour un usage avec les properties bundles (i18n)
+                    </aside>
+                </pre>
+            </section>
+            <section>
+                Validation niveau 2 métier (régles métiers) cas passant
+                <img class="stretch" src="/schemas/3-from-http-to-command.png"/>
+
+                <aside class="notes">
+                    Validation d'une commande, réutilisation des contraintes,
+                </aside>
+            </section>
+
+            <section>
+                Contexte et traitement d'une commande
+                <pre>
+                    <code data-trim data-noescape>
+case class CommandContext(issuer: Identity,
+                        when: DateTime,
+                        command: Cmd,
+                        commandId: CommandId)
+
+trait CommandProcessor[C <: Cmd, E] extends Serializable {
+                            def validator: Validator[E]
+                            def events(context: CommandContext): E=> List[BusinessEvent]
+}
+
+type CommandValidation=ValidationNel[CommandError, List[AnyEvent]]
+type Validator[E] = scalaz.Reader[E, CommandValidation]
+
+trait CommandError
+case object NotRelevantCommand extends CommandError
+
+
+                      </code>
+                </pre>
+                <aside class="notes">
+                    Définir a quoi servent les différentes variables // issuer avec jwt<br/>
+                    Ajouter + infos sur reader ???<br/>
+                    Ajouter + infos sur Validation<br/>
+                    Faut t'il faire apparaître commandId ???
+
+                </aside>
+            </section>
+
+
             <section>
                 Utilité de serialiser les commandes
                 <aside class="notes">
