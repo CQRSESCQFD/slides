@@ -1,11 +1,5 @@
 ## Speakers
 
-Damien GOUYETTE @cestpasdur
-
-![](images/damien.jpg)
-
-Valentin KASAS @Kanaka
-
-![](images/valentin.jpg)
-            
+|Damien GOUYETTE  <br/>![](images/damien.jpg)<br/> @cestpasdur| Valentin KASAS <br/>![](images/valentin.jpg) <br/> @ValentinKasas |
+|------|--------|            
         
