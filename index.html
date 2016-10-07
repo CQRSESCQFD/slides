@@ -47,6 +47,7 @@
 
             </aside>
         </section>
+        <section>Définition d'un aggregat ?</section>
         <section>
             <section>
                 <mark>E</mark>
@@ -72,11 +73,15 @@
 
             <aside class="notes">
                 <ul>
-                    <li>Document oriented</li>
-                    <li>Côté query requête geospatiales, framework d'aggregation, requêtes portant sur plusieurs aggregats</li>
-                    <li>//TODO Définir aggregats vs states</li>
-                    <li>//TODO Côté commande</li>
-                    <li>Historique Hamak</li>
+                    <li>Historique Hamak aved mongo</li>
+                    <li>Commande = mise à jour d'un aggregat</li>
+                    <li>Query sur un seul objet = Appel à l'aggregat</li>
+                    <li>Query sur plusieurs aggregats = MongoDB</li>
+                    <dd>
+                        <li>Les requêtes sur plusieurs éléments</li>
+                        <li>Côté query requête geospatiales, framework d'aggregation, requêtes portant sur plusieurs aggregats</li>
+
+                    </dd>
                 </ul>
             </aside>
         </section>
@@ -99,25 +104,7 @@
             </section>
             <section data-markdown="external-md/validation-simple-type.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/validation-avancee.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
-            <section>
-                Anatomie d'une commande
-                <pre>
-                    <code data-trim data-noescape>
-sealed trait Cmd
-sealed trait UserCmd extends Cmd
-sealed trait JobCmd extends Cmd
-
-case object CreateJob extends JobCmd
-case object AddOrUpdateQuote extends JobCmd
-case class AddSkill extends UserCmd
-                    </code>
-                    </pre>
-                <aside class="notes">
-                    Qu'est ce qu'une commande ? <br/>
-                    Qu'est ce qu'une SAGA<br/>
-                    <mark>Saga</mark>: cas d'usage : creation d'un devis = ajout skill sur provider  (si besoin) + création devis <br/>
-                </aside>
-            </section>
+            <section data-markdown="external-md/anatomie-commande.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 
             <section>
                 Validation niveau 2 éme métier (régles métiers) cas KO
@@ -204,6 +191,7 @@ case object NotRelevantCommand extends CommandError
             </section>
 
 
+            <section data-markdown="external-md/commande-et-test.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section>
                 Utilité de serialiser les commandes
                 <aside class="notes">
@@ -219,9 +207,9 @@ case object NotRelevantCommand extends CommandError
                     1 / 1 ou 1 -> N
                 </aside>
             </section>
+            <section data-markdown="external-md/command-kind.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/command2event.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/event-handler.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
-
         </section>
         <section>
 
