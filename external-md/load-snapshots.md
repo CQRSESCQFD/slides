@@ -7,12 +7,11 @@ class MongoSnapshotStore extends SnapshotStore   {
                jobOpt <- jobDao.findById(JobId(id))
             case "user" :: id :: Nil=> 
                userOpt <- userDao.findById(UserId(id))
-
    }
 }
 ```
 <aside class="notes">
-    Comment réparer des snapshots<br/>
+    Comment réparer des snapshots : recovery<br/>
     Events vs snapshots : aspect backup
     
 </aside>

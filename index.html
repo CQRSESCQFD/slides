@@ -40,8 +40,10 @@
         <section>
             CRUD traditionnel<br/>
             <aside class="notes">
+                La BDD représente l'état courant du sytème. Quid des états précédents<br/>
                 persistence de la mutation d'un état<br/>
                 + maturité (concepts, outillage, développeur) que ce soit BDD traditionnelle ou NoSQL<br/>
+                + moins d'espace de stockage<br/>
                 - Perte d'informations à chaque requête en écriture<br/>
                 Il existe cependant des outils d'historisation (hibernate anvers, triggers sur tables...)
 
@@ -196,6 +198,7 @@ case object NotRelevantCommand extends CommandError
                 Utilité de serialiser les commandes
                 <aside class="notes">
                     Parler du scheduling ? Pour réinjecter à un moment donné une commande VS schedule non persisté
+                    Les acteur persistant sauvegardent leur état, mais pas leur mailbox ???
                 </aside>
             </section>
         </section>
@@ -218,7 +221,9 @@ case object NotRelevantCommand extends CommandError
             </section>
             <section data-markdown="external-md/akka-persistence-user.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/discriminer-snapshot.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
-            <section data-markdown="external-md/snapshots.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+            <section data-markdown="external-md/load-snapshots.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+            <section data-markdown="external-md/save-snapshots.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+            <section data-markdown="external-md/sharding.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/singletons.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 
             </aside>
