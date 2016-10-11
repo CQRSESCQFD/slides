@@ -2,16 +2,17 @@
 
 Consiste à appliquer la modification de l'événement sur l'état
 
-```
-val jobLenser = Lenser[Job] // macro monocle
-val description = jobLenser(_.description)
+<pre>
+<code data-trim data-noescape>
+// macro monocle
+val description = Lenser[Job](_.description)
 
 object JobEventHandler {
    case JobDescriptionUpdated.operation(FieldUpdate(_, updated)) => 
       description.set(updated)(job)
-
 }
-```
+</code>
+</pre>
 
 
 <aside class="notes">

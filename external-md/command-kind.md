@@ -12,3 +12,13 @@ case class FieldDeletion[Field](was: Field)
     extends Operation
 ```
 
+```
+case JobStatusUpdated(
+    jobId@JobId(_), _ , _ , FieldUpdate(_, Cancelled), _) =>
+```
+<!-- .element: class="fragment" -->
+
+<aside class="notes">
+    Besoins de serialisations différentes entre Creation et Update<br/>
+    Faciliter la récupération de certains champ via pattern matching
+</aside>

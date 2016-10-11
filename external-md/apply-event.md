@@ -1,25 +1,27 @@
 Events & States
 
 ```
-//current job state
+//JobCreated 
 { "status" : "inreview", 
   "description" : "Garder mes enfants de 17h->19h tous les vendredi"}
+``` 
+<!-- .element: class="fragment" -->
 
+<pre>
+<code data-trim data-noescape>
 //JobApproved
-
-{ "status" : "pending", 
+{ "status" : <mark>"pending"</mark>, 
   "description" : "Garder mes enfants de 17h->19h tous les vendredi"}
+</code>
+</pre>
+<!-- .element: class="fragment" -->
 
-//JobDescriptionUdated("Garder mes enfants après l'école jusqu'à 20h")
-
+<pre>
+<code data-trim data-noescape>
+//JobDescriptionUdated
 { "status" : "pending", 
-  "description" : "Garder mes enfants après l'école jusqu'à 20h"}
-```
+ "description" : <mark>"Garder mes enfants après l'école jusqu'à 20h"</mark>}  
+</code>
+</pre>
+<!-- .element: class="fragment" -->
 
-<aside class="notes">
-    <ul>
-        <li>Event</li>
-        <li>Etat</li>
-        <li>Exemples d'interactions sur les events JobApproved, JobDescriptionUdated (notification, modération)</li>
-    </ul>
-</aside>
