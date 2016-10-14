@@ -1,12 +1,12 @@
 ### Sauvegarde des snapshots
-```
+```scala
 class MongoSnapshotStore extends SnapshotStore   {
-   override def saveAsync(metadata: SnapshotMetadata, snapshot: Any): Future[Unit] = {
-       snapshot match {
-         case u: User =>
-            userDao.save(u.copy(snapshotMetadata = Some(metadata)))
-         case j: Job => 
-            jobDao.save(j.copy(snapshotMetadata = Some(metadata)))
+  override def saveAsync(metadata: SnapshotMetadata, snapshot: Any): Future[Unit] =
+    snapshot match {
+      case u: User =>
+        userDao.save(u.copy(snapshotMetadata = Some(metadata)))
+      case j: Job =>
+        jobDao.save(j.copy(snapshotMetadata = Some(metadata)))
    }
 }
 ```

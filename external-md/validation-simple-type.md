@@ -1,6 +1,6 @@
 ## Validation simple par les types
 
-```
+```scala
 case class Job(description: Option[String] = None, 
     askerId : UserId, 
     skill: Skill)

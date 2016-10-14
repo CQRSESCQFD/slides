@@ -1,6 +1,6 @@
 ## Des événements différents
 
-```
+```scala
 sealed trait Operation
 case class EntityCreation[Entity](initial: Entity) 
     extends Operation
@@ -12,7 +12,7 @@ case class FieldDeletion[Field](was: Field)
     extends Operation
 ```
 
-```
+```scala
 case JobStatusUpdated(
     jobId@JobId(_), _ , _ , FieldUpdate(_, Cancelled), _) =>
 ```

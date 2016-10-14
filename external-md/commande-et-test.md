@@ -1,6 +1,6 @@
 ## Facile à tester
 
-```
+```scala
 "when job status is finished UpdateJobDescription must be refused" in{
   //given
   val job = generateJob(generateUser)

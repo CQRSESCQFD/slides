@@ -1,12 +1,12 @@
 ### Chargement des snapshots
-```
+```scala
 class MongoSnapshotStore extends SnapshotStore   {
   override def loadAsync(persistenceId: String): Future[Option[Snap]] = {
-      persistenceId.split("-").toList match {
-            case "job" :: id :: Nil =>
-               jobOpt <- jobDao.findById(JobId(id))
-            case "user" :: id :: Nil=> 
-               userOpt <- userDao.findById(UserId(id))
+    persistenceId.split("-").toList match {
+      case "job" :: id :: Nil =>
+        jobDao.findById(JobId(id))
+      case "user" :: id :: Nil=>
+        userDao.findById(UserId(id))
    }
 }
 ```

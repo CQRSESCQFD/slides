@@ -1,5 +1,5 @@
 ## Validations à la carte
-```
+```scala
 //company
 (__ \ "name").readNullable[String] and
 (__ \ "siren").readNullable[String](length(8)) and

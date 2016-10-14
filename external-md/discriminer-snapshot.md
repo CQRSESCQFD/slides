@@ -1,6 +1,6 @@
 ### Discriminer les snapshots
 
-```
+```scala
 case class User(userId : UserId)
 //serialisation = {"_id" : "user-57d80fb91db5e79549713ab5"}
 case class Job(jobId : JobId)
