@@ -1,6 +1,4 @@
-## Hamak.fr
-
-![Hamak.fr](images/hamak.png)  
+![Hamak.fr](images/hamakProviderAsker.png)  
 
 <aside class="notes">
 Projet ayant remporté un  hackathon chez Solocal<br/>
