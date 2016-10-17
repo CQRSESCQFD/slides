@@ -1,6 +1,5 @@
 #### Vie des events
 
-
 Pipeline
 
 ```scala
@@ -11,11 +10,8 @@ object UserCreated extends EventCompanion[User,  EntityCreation] {
     override def readPipeline: ReadPipeline[User] = ReadPipeline(
         3 -> addAccountStatus)}
 ```
-
 Sérilisation et valeur par défaut
 
 ```scala
 (__ \ "accountStatus").readNullable[String].map(_.getOrElse("active"))
 ```
-
-
