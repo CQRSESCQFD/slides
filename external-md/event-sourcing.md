@@ -37,6 +37,7 @@
         <li>immuabilité => zéro perte d'information, on peut faire plusierus choses avec le même event, le distribuer, fixer des bugs a posteriori</li>
         <li>découplage entre le modèle métier (état) et le schéma de stockage (events)</li>
         <li>intuitivité => c'est un modèle plus proche de la façon dont les humains perçoivent le monde</li>
+        <li>Audit et historique </li>
     </ul>
 </aside>
 
@@ -45,7 +46,7 @@
 ## ES : Aggrégats
 
 * correspond à un flux d'événements
-* résponsable de la transactionalité
+* responsable de la transactionalité
 * maintient l'état applicatif
 
 <aside class="notes">
