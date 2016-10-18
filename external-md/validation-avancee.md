@@ -1,4 +1,5 @@
 ## Validations à la carte
+
 ```scala
 //company
 (__ \ "name").readNullable[String] and
@@ -9,6 +10,7 @@
 (__ \ "capital").readNullable[BigDecimal]
   
 ```
+
 <aside class="notes">
     Découpage de ses classes de validation/serialisation en package (controller, shared, persistance, events)<br/>
     Notions de DTO avec conversions implicites ???

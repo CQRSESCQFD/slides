@@ -16,7 +16,7 @@
 * on remplace les écritures directes par des commandes
 
 <aside class="notes">
-
+Préciser que CQRS ne présuppose rien sur le stockage
 </aside>
 
 

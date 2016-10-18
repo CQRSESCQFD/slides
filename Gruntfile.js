@@ -131,6 +131,9 @@ module.exports = function(grunt) {
 			markdown: {
 				files: [ '*.md' ]
 			},
+			custom_css: {
+				files: [ 'css/custom.css']
+			},
 			options: {
 				livereload: true
 			}

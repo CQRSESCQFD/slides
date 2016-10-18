@@ -6,12 +6,14 @@
 
     <title>reveal.js</title>
 
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/black.css">
-    <link ref="stylesheet" href="css/custom.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+    <link ref="stylesheet" type="text/css" href="css/custom.css">
+
 
     <!-- Printing and PDF exports -->
     <script>
@@ -36,8 +38,7 @@
         </section>
         <section data-markdown="external-md/archi-reseau.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 
-        </section>
-        <section>
+        <section data-background-image="https://upload.wikimedia.org/wikipedia/commons/e/e0/A_view_of_the_server_room_at_The_National_Archives.jpg">
             <h1>CRUD traditionnel</h1>
             <aside class="notes">
                 La BDD représente l'état courant du sytème. Quid des états précédents<br/>
@@ -50,18 +51,16 @@
             </aside>
         </section>
         <section>
-            <section>
-                <h1><mark>E</mark>
-                vent
-                <mark>S</mark>
-                ourcing</h1>
+            <section data-background-image="http://blogs.voanews.com/science-world/files/2016/06/9920067926_ed3988febe_k.jpg">
+                <h1>Event Sourcing</h1>
             </section>
             <section data-markdown="external-md/event-sourcing.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/apply-event.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 
         </section>
         <section>
-            <section>
+            <section data-background-image="https://www.euractiv.com/wp-content/uploads/sites/2/2015/07/sunrise_addis_ababa_creditjean_rebiffe_flickr.jpeg">
+            <!--<section data-background-image="images/cqrs.jpg">-->
                 <h1>CQRS</h1>
 
                 <aside class="notes">
@@ -83,8 +82,8 @@
 
 
         <section>
-            <section>
-                <h1>De la requête HTTP à la commande</h1>
+            <section data-background-image="images/http-commande.jpg">
+                <h1>HTTP ↣ Commande</h1>
             </section>
             <section>
                 Validation de la requête<br/>
@@ -109,84 +108,11 @@
                     Validation d'une commande, réutilisation des contraintes,
                 </aside>
             </section>
-            <section>
-                <pre>
-                    <code data-trim data-noescape>
-def StateIsNotNull[E <: AnyRef]: Validator[E]=Reader {state=>
-  if (state == null) StateShouldNotBeNull.failureNel[List[AnyEvent]]
-  else Nil.successNel[CommandError]
-}
-def StatusIsOneOf(head: JobStatus,tail:JobStatus*): Validator[Job]={
-  val statuses = head :: tail.toList
-  Validator[Job] {
-    job =>
-      if(statuses.contains(job.status)) Nil.successNel[CommandError]
-      else WrongJobStatus.failureNel[List[AnyEvent]]
-  }
-}
- //possibilité de les combiner
-StateIsNotNull[Job] |+| StatusIsOneOf(InReview, Pending)
-                    </code>
-                </pre>
-            </section>
-            <section>
-                Conversion des erreurs de validation en code http
-                <pre>
-                    <code data-trim data-noescape="">
-def toError(key : String): (List[CommandError] => Result) =  {
-    case StateShouldNotBeNull :: Nil => NotFound(key)
-    case JobV.WrongJobStatus :: Nil => Conflict(key)
-}
-                    </code>
-                    <aside class="notes">
-                        Pas de gestion des erreurs multiples, mais le besoin ne s'est pas fait ressentir vis à vis des clients<br/>
-                        besoin de standardiser les clés pour un usage avec les properties bundles (i18n)
-                    </aside>
-                </pre>
-            </section>
-            <section>
-                Validation niveau 2 métier (régles métiers) cas passant
-                <img class="stretch" src="/schemas/3-from-http-to-command.png"/>
-
-                <aside class="notes">
-                    Validation d'une commande, réutilisation des contraintes,
-                </aside>
-            </section>
-
-            <section>
-                Contexte et traitement d'une commande
-                <pre>
-<code data-trim data-noescape>
-case class CommandContext(issuer: Identity,
-                          when: DateTime,
-                          command: Cmd,
-                          commandId: CommandId)
-
-trait CommandProcessor[C <: Cmd, E] extends Serializable {
-  def validator: Validator[E]
-  def events(context: CommandContext): E=> List[BusinessEvent]
-}
-
-type CommandValidation = ValidationNel[CommandError, List[AnyEvent]]
-type Validator[E]      = scalaz.Reader[E, CommandValidation]
-
-trait CommandError
-case object NotRelevantCommand extends CommandError
-</code>
-                </pre>
-                <aside class="notes">
-                    Définir a quoi servent les différentes variables // issuer avec jwt<br/>
-                    Ajouter + infos sur reader ???<br/>
-                    Ajouter + infos sur Validation<br/>
-                    Faut t'il faire apparaître commandId ???
-
-                </aside>
-            </section>
-
+            <section data-markdown="external-md/functional-validation.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n" data-separator-notes="^Note:"></section>
             <section data-markdown="external-md/create-job-processor.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 
 
-            <section data-markdown="external-md/commande-et-test.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+            <section data-markdown="external-md/commande-et-test.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n" data-separator-notes="^Note:"></section>
             <section>
                 Utilité de serialiser les commandes
                 <aside class="notes">

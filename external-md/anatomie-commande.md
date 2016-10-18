@@ -1,6 +1,5 @@
  ## Anatomie d'une commande
 
-
 ```
 sealed trait Cmd
 sealed trait UserCmd extends Cmd

@@ -1,7 +1,6 @@
 ### Exemple de processor
  
-<pre>
-<code data-trim data-noescape>
+```scala 
 CommandProcessor[UpdateJob, Job] {
   cmd =>
     new CommandProcessor[UpdateJob, Job] {
@@ -13,6 +12,7 @@ CommandProcessor[UpdateJob, Job] {
       JobDescriptionUpdated(
         context,
         FieldUpdate(state.description, cmd.job.description)) :: Nil
+        
     }
-</code>
-</pre>
+}
+```

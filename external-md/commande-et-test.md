@@ -1,7 +1,7 @@
 ## Facile à tester
 
 ```scala
-"when job status is finished UpdateJobDescription must be refused" in{
+"when status is finished UpdateJobDescription must be refused" in {
   //given
   val job = generateJob(generateUser)
     .gen(dataFactory).copy(status = Finished)
@@ -17,8 +17,9 @@
 }
 ```
 
-<aside class="notes">
-    Pas de mock nécessaire<br/>
-    Usage de générateurs type scalacheck pratiques
-</aside>
+Note:
+* Pas de mock nécessaire
+* On aurait pu utiliser scalacheck
+* Usage de générateurs type scalacheck pratiques (TODO retrouver le nom de la lib)
+
 
