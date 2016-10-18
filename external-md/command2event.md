@@ -20,10 +20,10 @@ object JobDescriptionUpdated extends
 
 * ça complique les traitements en aval
 
-
-<aside class="notes>
-Quand une commande génère plusieurs events, on ne veut pas envoyer plusieurs fois le même email (par exemple) 
+<aside class="notes">
+    Quand une commande génère plusieurs events, on ne veut pas envoyer plusieurs fois le même email (par exemple)
 </aside>
+
 
 
 ## Solution

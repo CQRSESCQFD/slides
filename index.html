@@ -61,34 +61,30 @@
 
         </section>
         <section>
-            <mark>C</mark>
-            ommand
-            <mark>Q</mark>
-            uery
-            <mark>R</mark>
-            esponsability
-            <mark>S</mark>
-            egregation
+            <section>
+                <h1>CQRS</h1>
 
-            <aside class="notes">
-                <ul>
-                    <li>Historique Hamak aved mongo</li>
-                    <li>Commande = mise à jour d'un aggregat</li>
-                    <li>Query sur un seul objet = Appel à l'aggregat</li>
-                    <li>Query sur plusieurs aggregats = MongoDB</li>
-                    <dd>
-                        <li>Les requêtes sur plusieurs éléments</li>
-                        <li>Côté query requête geospatiales, framework d'aggregation, requêtes portant sur plusieurs aggregats</li>
+                <aside class="notes">
+                    <ul>
+                        <li>Historique Hamak aved mongo</li>
+                        <li>Commande = mise à jour d'un aggregat</li>
+                        <li>Query sur un seul objet = Appel à l'aggregat</li>
+                        <li>Query sur plusieurs aggregats = MongoDB</li>
+                        <dd>
+                            <li>Les requêtes sur plusieurs éléments</li>
+                            <li>Côté query requête geospatiales, framework d'aggregation, requêtes portant sur plusieurs aggregats</li>
 
-                    </dd>
-                </ul>
-            </aside>
+                        </dd>
+                    </ul>
+                </aside>
+            </section>
+            <section data-markdown="external-md/cqrs.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
         </section>
 
 
         <section>
             <section>
-                De la requête HTTP à la commande
+                <h1>De la requête HTTP à la commande</h1>
             </section>
             <section>
                 Validation de la requête<br/>
@@ -160,25 +156,23 @@ def toError(key : String): (List[CommandError] => Result) =  {
             <section>
                 Contexte et traitement d'une commande
                 <pre>
-                    <code data-trim data-noescape>
+<code data-trim data-noescape>
 case class CommandContext(issuer: Identity,
-                        when: DateTime,
-                        command: Cmd,
-                        commandId: CommandId)
+                          when: DateTime,
+                          command: Cmd,
+                          commandId: CommandId)
 
 trait CommandProcessor[C <: Cmd, E] extends Serializable {
-                            def validator: Validator[E]
-                            def events(context: CommandContext): E=> List[BusinessEvent]
+  def validator: Validator[E]
+  def events(context: CommandContext): E=> List[BusinessEvent]
 }
 
-type CommandValidation=ValidationNel[CommandError, List[AnyEvent]]
-type Validator[E] = scalaz.Reader[E, CommandValidation]
+type CommandValidation = ValidationNel[CommandError, List[AnyEvent]]
+type Validator[E]      = scalaz.Reader[E, CommandValidation]
 
 trait CommandError
 case object NotRelevantCommand extends CommandError
-
-
-                      </code>
+</code>
                 </pre>
                 <aside class="notes">
                     Définir a quoi servent les différentes variables // issuer avec jwt<br/>

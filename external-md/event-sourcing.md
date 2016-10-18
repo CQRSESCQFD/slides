@@ -65,3 +65,29 @@ val eventHandler: (State, Event) => State = ???
 def currentState(events: Seq[Event]) =
   events.foldLeft(emptyState)(eventHandler)
 ```
+
+
+
+## ES : Snapshots
+
+* "photo" de l'état courant d'un aggrégat à un instant T
+* permet de gagner du temps de démarrage
+
+
+
+## ES : Hamak
+
+* un flux par entité (user/job)
+* backend : eventstore
+
+
+
+## Eventstore
+
+* projet initié par Greg Young
+* stockage des événements en JSON ou en binaire
+* 5k/s en écriture 15k/s en lecture
+
+<aside class="notes">
+  TODO Screenshot ? démo ?
+</aside>
