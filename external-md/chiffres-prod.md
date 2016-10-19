@@ -3,8 +3,8 @@
 <ul>
     <li>Au moins une MEP / sprint (2 semaines)</li>
     <li>60 000 utilisateurs, 3 500 missions</li>
-    <li>Eventstore : 30 Go</li>
-    <li>MongoDB : 300 Mo</li>
+    <li>Eventstore : 40 Go</li>
+    <li>MongoDB : 370 Mo</li>
 </ul>
 
 <aside class="notes">
