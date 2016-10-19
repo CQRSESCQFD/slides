@@ -33,5 +33,3 @@ object JobDescriptionUpdated extends
 ```scala
 // TODO ajouter la classe de métadonnées
 ```
-
-

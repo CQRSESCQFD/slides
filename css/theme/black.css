@@ -292,6 +292,6 @@ body {
   color: whitesmoke;
   border-top: solid 0.1em whitesmoke;
   border-bottom: solid 0.1em whitesmoke;
-  text-shadow: 0.05em 0.05em 0.05em darkgrey;
-  display: inline;
+  text-shadow: 0.05em 0.05em 0.05em #222;
+  display: inline-block;
 }

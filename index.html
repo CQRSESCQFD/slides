@@ -27,10 +27,14 @@
 <body>
 <div class="reveal">
     <div class="slides">
-        <section data-markdown>## CQRS + ES > CRUD, CQFD</section>
+        <section data-markdown># CQRS + ES > CRUD, CQFD</section>
 
         <section data-markdown="external-md/speakers.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
         <section data-markdown="external-md/hamak-business.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+        <section>
+            <h3>Vous avez échappé à</h3>
+            <p style="font-size: 2em"><span class="fragment">FP</span> <span class="fragment">w/ CQRS</span><span class="fragment">+ES</span> <span class="fragment">for HATEOAS(HAL)</span> <span class="fragment">on AWS</span><span class="fragment"> > CRUD+ORM on OVH</span></p>
+        </section>
         <section>
             <section>Modèle métier simplifié</section>
             <section data-markdown="external-md/simple-model-provider.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
@@ -59,8 +63,8 @@
 
         </section>
         <section>
-            <section data-background-image="https://www.euractiv.com/wp-content/uploads/sites/2/2015/07/sunrise_addis_ababa_creditjean_rebiffe_flickr.jpeg">
-            <!--<section data-background-image="images/cqrs.jpg">-->
+            <!--<section data-background-image="https://www.euractiv.com/wp-content/uploads/sites/2/2015/07/sunrise_addis_ababa_creditjean_rebiffe_flickr.jpeg">-->
+            <section data-background-image="images/cqrs.jpg">
                 <h1>CQRS</h1>
 
                 <aside class="notes">
@@ -83,7 +87,7 @@
 
         <section>
             <section data-background-image="images/http-commande.jpg">
-                <h1>HTTP ↣ Commande</h1>
+                <h1>de la requête http à la commande</h1>
             </section>
             <section>
                 Validation de la requête<br/>
@@ -121,9 +125,10 @@
                 </aside>
             </section>
         </section>
+
         <section>
             <section>
-                De la commande aux événements
+                <h1>De la commande aux événements</h1>
             </section>
             <section data-markdown="external-md/command-kind.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/command2event.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
@@ -132,7 +137,7 @@
         <section>
 
             <section>
-                Akka à la rescousse
+                <h1>Akka à la rescousse</h1>
             </section>
             <section data-markdown="external-md/akka-persistence-user.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/discriminer-snapshot.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
@@ -144,7 +149,7 @@
         </section>
 
         <section>
-            <section>2 ans plus tard
+            <section><h1>2 ans plus tard</h1>
                 <aside class="notes">
                     Charge<br/>
                     Log et timeout sur les asks<br/>
@@ -155,9 +160,8 @@
             <section data-markdown="external-md/chiffres-dev.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/chiffres-prod.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
         </section>
-        <section>
-            ¿ Questions ?<br/>
-            <img src="https://media.giphy.com/media/5XRB3Ay93FZw4/giphy.gif"/>
+        <section data-background-image="https://media.giphy.com/media/5XRB3Ay93FZw4/giphy.gif">
+            <h1>¿ Questions ?</h1>
         </section>
     </div>
 </div>
