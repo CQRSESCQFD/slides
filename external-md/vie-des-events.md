@@ -13,5 +13,6 @@ object UserCreated extends EventCompanion[User,  EntityCreation] {
 Sérilisation et valeur par défaut
 
 ```scala
-(__ \ "accountStatus").readNullable[String].map(_.getOrElse("active"))
+(__ \"accountStatus").readNullable[String]
+    .map(_.getOrElse("active"))
 ```
