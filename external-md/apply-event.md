@@ -3,7 +3,7 @@ Events & States
 ```
 //JobCreated 
 { "status" : "inreview", 
-  "description" : "Garder mes enfants de 17h->19h tous les vendredi"}
+  "description" : "Garder mes enfants de 17h->19h les vendredi"}
 ``` 
 <!-- .element: class="fragment" -->
 
@@ -11,7 +11,7 @@ Events & States
 <code data-trim data-noescape>
 //JobApproved
 { "status" : <mark>"pending"</mark>, 
-  "description" : "Garder mes enfants de 17h->19h tous les vendredi"}
+  "description" : "Garder mes enfants de 17h->19h les vendredi"}
 </code>
 </pre>
 <!-- .element: class="fragment" -->
