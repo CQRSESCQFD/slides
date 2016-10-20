@@ -6,3 +6,8 @@
 Parler  des optimisations en lecture de mongo sur framework d'aggregation : ReadPreference.secondaryPreferred<br/>
 La valeur par defaut côté client reactiveMongo = Primary
 </aside>
+
+
+### AWS Opsworks 
+
+![](images/opsworks-layers.png)

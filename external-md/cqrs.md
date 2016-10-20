@@ -28,6 +28,11 @@ Préciser que CQRS ne présuppose rien sur le stockage
 
 
 
+## CQRS+ES à Hamak
+
+![](images/cqrs-hamak.png)
+
+
 ## CQRS + ES = **<3**<!-- .element: class="fragment highlight-red" data-fragment-index="1" --->
 
 <aside class="notes">
