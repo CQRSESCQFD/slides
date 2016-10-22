@@ -11,9 +11,8 @@ UserController->UserController : json valide
 UserController-> CommandHandler : CreateUser
 CommandHandler -> CommandHandler : Règles métier valides
 CommandHandler -> EventHandler : UserCreated
-EventHandler -> EventHandler : ???
-EventHandler -> CommandHandler : ???
-CommandHandler -> UserController : ???
+EventHandler -> EventHandler : persist
+EventHandler -> UserController : updatedUser
 UserController -> "Client Http" : Reponse 201 + Location
 
 @enduml

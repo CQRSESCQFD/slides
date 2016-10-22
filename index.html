@@ -37,12 +37,6 @@
             <h3>Vous avez échappé à</h3>
             <p style="font-size: 2em"><span class="fragment">FP</span> <span class="fragment">w/ CQRS</span><span class="fragment">+ES</span> <span class="fragment">for HATEOAS(HAL)</span> <span class="fragment">on AWS</span><span class="fragment"> <br/> > <br/>OOP w/ CRUD+ORM on OVH</span></p>
         </section>
-        <section>
-            <section>Modèle métier simplifié</section>
-            <section data-markdown="external-md/simple-model-provider.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
-            <section data-markdown="external-md/simple-model-job.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
-        </section>
-        <section data-markdown="external-md/archi-reseau.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 
         <section data-background-image="https://upload.wikimedia.org/wikipedia/commons/e/e0/A_view_of_the_server_room_at_The_National_Archives.jpg">
             <h1>CRUD traditionnel</h1>
@@ -85,6 +79,13 @@
 
 
         <section>
+            <section data-background-image="images/hamak.jpg"><h1>Hamak</h1></section>
+            <section data-markdown="external-md/simple-model-job.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+            <section data-markdown="external-md/archi-reseau.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+            <section data-markdown="external-md/akka-cluster.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+        </section>
+
+        <section>
             <section data-background-image="images/http-commande.jpg">
                 <h1>de la requête http à la commande</h1>
             </section>
@@ -92,37 +93,19 @@
                 Validation de la requête<br/>
 
                 <img class="stretch" src="/schemas/1-from-http-to-command-missing-field.png"/>
-                <br/> 1er niveau (technique) : Controller
+                <br/> 1er niveau (validation JSON) : Controller
                 <aside class="notes">
                     Chaque requête http (en écriture) à l'API correspond à une commande<br/>
                     Et à une query en lecture<br/>
                     API REST & CQRS
                 </aside>
             </section>
-            <section data-markdown="external-md/validation-simple-type.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/validation-avancee.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
-            <section data-markdown="external-md/anatomie-commande.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
-
-            <section>
-                Validation niveau 2 éme métier (régles métiers) cas KO
-                <img class="stretch" src="/schemas/2-from-http-to-command-missing-field.png"/>
-
-                <aside class="notes">
-                    Validation d'une commande, réutilisation des contraintes,
-                </aside>
-            </section>
             <section data-markdown="external-md/functional-validation.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n" data-separator-notes="^Note:"></section>
             <section data-markdown="external-md/create-job-processor.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 
 
             <section data-markdown="external-md/commande-et-test.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n" data-separator-notes="^Note:"></section>
-            <section>
-                Utilité de serialiser les commandes
-                <aside class="notes">
-                    Parler du scheduling ? Pour réinjecter à un moment donné une commande VS schedule non persisté
-                    Les acteur persistant sauvegardent leur état, mais pas leur mailbox ???
-                </aside>
-            </section>
         </section>
 
         <section>
@@ -141,8 +124,6 @@
             <section data-markdown="external-md/discriminer-snapshot.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/load-snapshots.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/save-snapshots.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
-            <section data-markdown="external-md/akka-cluster.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
-
             </aside>
         </section>
 
@@ -172,7 +153,7 @@
     Reveal.initialize({
         history: true,
         slideNumber: true,
-        showNotes: false,//display notes
+        showNotes: true,//display notes
 
 
         // More info https://github.com/hakimel/reveal.js#dependencies

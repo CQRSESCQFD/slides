@@ -1,7 +1,7 @@
 ### Exemple de processor
  
 ```scala 
-CommandProcessor[UpdateJob, Job] {
+implicit val updateJobProc = CommandProcessor[UpdateJob, Job] {
   cmd =>
     new CommandProcessor[UpdateJob, Job] {
     
@@ -9,9 +9,7 @@ CommandProcessor[UpdateJob, Job] {
       StateIsNotNull[Job] |+| StatusIsOneOf(InReview, Pending)
    
     override def events(context: CommandContext) = (state: Job) =>
-      JobDescriptionUpdated(
-        context,
-        FieldUpdate(state.description, cmd.job.description)) :: Nil
+      ??? // TODO 
         
     }
 }

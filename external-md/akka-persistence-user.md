@@ -1,18 +1,21 @@
 ## Akka persistence
 
 ```
-sealed trait UserEvent
-case class LastNameUpdated(lastName: String) extends UserEvent
-case class User(userId:String,firstName:String, lastName:String)
-
 class UserPersistenceActor extends PersistentActor {
   var state = User("user-57d80fb91db5e79549713ab5", "John", "DOE")
   
   override def persistenceId = "user-57d80fb91db5e79549713ab5"
   
   override def receiveCommand: Receive = {
-    case LastNameUpdated(newLastName) => 
-        state = state.copy(lastName = newLastName)
+    // validation de commande
+    // appel à persist
+    // update du state après persist
+  }
+        
+  override def receiveRecover: Receive = {
+    // update du state     
+  }      
+  
  }
 ```
 

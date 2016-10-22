@@ -2,8 +2,8 @@
 
 ```scala
 case class Job(description: Option[String] = None, 
-    askerId : UserId, 
-    skill: Skill)
+               askerId : UserId, 
+               skill: Skill)
     
 sealed trait Skill
 case objet Babysitting extends Skill

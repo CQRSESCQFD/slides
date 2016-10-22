@@ -2,7 +2,6 @@
 
 ![](images/akka-clustering.png)
 
-
 <aside class="notes">
     EIP<br/>
     Annecdotes<br/>

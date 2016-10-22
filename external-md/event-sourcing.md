@@ -91,3 +91,11 @@ def currentState(events: Seq[Event]) =
 <aside class="notes">
   TODO Screenshot ? démo ?
 </aside>
+
+
+
+![Stream](images/eventstore_global.png)
+
+
+
+![Stream](images/eventstore_single.png)

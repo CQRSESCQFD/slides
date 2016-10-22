@@ -1,19 +1,20 @@
-## Structure d'un événement
+#### Structure d'un événement
 
 ```scala
-trait BusinessEvent extends Event {
-  def target: EntityId
-  def who:    Identity
-  def when:   DateTime
-  def what:   Operation
-  def why:    CommandRef
+trait Event {
+  def target:  EntityId
+  def who:     Identity
+  def when:    DateTime
+  def what:    Operation
+  def why:     CommandRef
+  def version: Int
 }
 ```
 
 
 
 
-## Différents types d'opérations
+#### Différents types d'opérations
 
 ```scala
 sealed trait Operation
@@ -27,7 +28,10 @@ case class FieldDeletion[Field](was: Field)
     extends Operation
 ```
 
+
 ```scala
+// quelque part dans l'event handler
+
 case JobStatusUpdated(
     jobId@JobId(_), _ , _ , FieldUpdate(_, Cancelled), _) =>
 ``` 
@@ -40,7 +44,7 @@ case JobStatusUpdated(
 
 
 
-## Une commande, un/des events
+#### Une commande, un/des events
 
 ```scala
 case object CreateJob extends JobCmd
@@ -58,7 +62,7 @@ object JobDescriptionUpdated extends
 
 
 
-## Problème
+#### Problème
 
 * ça complique les traitements en aval
 
@@ -68,7 +72,7 @@ object JobDescriptionUpdated extends
 
 
 
-## Solution
+#### Solution
 
 * on contextualise les événements en y ajoutant des métadonnées
 
