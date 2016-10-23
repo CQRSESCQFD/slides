@@ -27,7 +27,11 @@
 <body>
 <div class="reveal">
     <div class="slides">
-        <section data-markdown># CQRS + ES > CRUD, CQFD</section>
+        <section>
+            <section data-background-image="images/theme.png" data-background-size="contain">
+                <h1>CQRS + ES > CRUD, CQFD</h1>
+            </section>
+        </section>
 
         <section data-markdown="external-md/speakers.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
         <section>
@@ -89,17 +93,7 @@
             <section data-background-image="images/http-commande.jpg">
                 <h1>de la requête http à la commande</h1>
             </section>
-            <section>
-                Validation de la requête<br/>
-
-                <img class="stretch" src="/schemas/1-from-http-to-command-missing-field.png"/>
-                <br/> 1er niveau (validation JSON) : Controller
-                <aside class="notes">
-                    Chaque requête http (en écriture) à l'API correspond à une commande<br/>
-                    Et à une query en lecture<br/>
-                    API REST & CQRS
-                </aside>
-            </section>
+            <section data-markdown="external-md/validation-simple-type.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/validation-avancee.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
             <section data-markdown="external-md/functional-validation.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n" data-separator-notes="^Note:"></section>
             <section data-markdown="external-md/create-job-processor.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
@@ -128,7 +122,7 @@
         </section>
 
         <section>
-            <section><h1>2 ans plus tard</h1>
+            <section data-background-image="images/2ans.jpg"><h1>2 ans plus tard</h1>
                 <aside class="notes">
                     Charge<br/>
                     Log et timeout sur les asks<br/>
