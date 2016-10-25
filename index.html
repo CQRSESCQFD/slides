@@ -12,8 +12,6 @@
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/black.css">
-    <link ref="stylesheet" type="text/css" href="css/custom.css">
-
 
     <!-- Printing and PDF exports -->
     <script>
@@ -27,11 +25,12 @@
 <body>
 <div class="reveal">
     <div class="slides">
-        <section>
-            <section data-background-image="images/theme.png" data-background-size="contain">
+            <section data-background-image="images/theme.png" />
                 <h1>CQRS + ES > CRUD, CQFD</h1>
             </section>
-        </section>
+            <section data-background-image="images/theme.png" data-background-size="contain">
+                <h1 style="color: #222; border-top: solid 0.1em #222; border-bottom: solid 0.1em #222;">CQRS + ES > CRUD, CQFD</h1>
+            </section>
 
         <section data-markdown="external-md/speakers.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
         <section>
@@ -147,7 +146,7 @@
     Reveal.initialize({
         history: true,
         slideNumber: true,
-        showNotes: true,//display notes
+        showNotes: false,//display notes
 
 
         // More info https://github.com/hakimel/reveal.js#dependencies
@@ -162,6 +161,8 @@
             }
         ]
     });
+    Reveal.slide( 1 );
+
 </script>
 </body>
 </html>
