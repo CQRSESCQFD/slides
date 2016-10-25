@@ -43,11 +43,11 @@
 
 
 
-## ES : Aggrégats
+## ES : Acteurs persistants
 
 * correspond à un flux d'événements
 * responsable de la transactionalité
-* maintient l'état applicatif
+* maintient l'état 
 
 <aside class="notes">
     <ul>
@@ -78,7 +78,9 @@ def currentState(events: Seq[Event]) =
 ## ES : Hamak
 
 * un flux par entité (user/job)
-* backend : eventstore
+* events : eventstore
+* snapshots : MongoDB
+
 
 
 
